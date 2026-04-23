@@ -78,3 +78,58 @@ The **Smart Medicine Reminder Box** is an IoT-based system that:
 ---
 
 ## 🔄 How It Works
+Power ON
+↓
+Connect to WiFi + Blynk
+↓
+Sync time via Blynk server → DS3231 RTC (IST UTC+5:30)
+↓
+User sets medicine times in Blynk app (V0, V1, V2)
+↓
+At scheduled time:
+→ LED turns ON + Buzzer beeps
+↓
+IR Sensor detects medicine:
+HIGH = Medicine still in box
+LOW  = Medicine removed (TAKEN)
+↓
+If IR goes LOW (medicine removed):
+→ LED OFF, Buzzer stops
+→ Blynk notification: "Medicine Taken ✅"
+↓
+If 30 seconds pass and IR still HIGH:
+→ LED OFF, Buzzer stops
+→ Blynk notification: "MISSED DOSE ⚠️"
+↓
+Resets at midnight → Ready for next day
+---
+
+## ✅ Test Results
+
+| Test Case | Expected Output | Result |
+|-----------|----------------|--------|
+| Medicine removed at alarm time | LED OFF, buzzer stops, notification sent | ✅ Pass |
+| Medicine not removed within 30 sec | Missed dose notification sent | ✅ Pass |
+| Time sync on boot via Blynk | RTC updated to correct IST time | ✅ Pass |
+| All 3 compartments triggered | All 3 LEDs and buzzer activate | ✅ Pass |
+| Daily reset at midnight | All states cleared automatically | ✅ Pass |
+
+---
+
+## 🚀 Future Scope
+- Add OLED display to show next medicine time
+- Add more compartments for weekly pill planning
+- Integrate voice alerts using DFPlayer Mini module
+- Cloud data logging of daily medicine intake history
+- Mobile camera to visually confirm medicine removal
+
+---
+
+## 📊 Applications
+- Elderly patient medicine management at home
+- Hospital ward medicine dispensing reminders
+- Chronic disease patients daily dose tracking
+- Hostel students managing their own medication
+
+---
+
